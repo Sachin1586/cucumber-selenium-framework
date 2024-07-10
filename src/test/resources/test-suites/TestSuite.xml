@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<suite name="SmokeTests" parallel="tests" data-provider-thread-count="5" thread-count="20">
+
+	<test name="Runner">
+		<classes>
+			<class name="org.example.runners.TestRunner" />
+		</classes>
+	</test>
+
+</suite>
