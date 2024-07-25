@@ -6,6 +6,7 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
@@ -47,13 +48,41 @@ public class DriverUtility {
 		}
 	}
 	
-	public boolean isWebElementDisplayed(String locator){
+	public boolean isWebElementDisplayed(String locator)throws Exception {
 		try{
 			if(driver.findElement(By.xpath(locator)).isDisplayed()){
 				return true;
 			}
 		}catch(Exception e){}
 		return false;
+	}
+	
+	public boolean sendKeys(WebElement element, String text) throws Exception {
+		try {
+			element.sendKeys(text);
+			return true;
+		}catch(Exception e) {
+			throw new TestFrameworkException("Failed to enter text " + element.toString(), e);
+		}
+	}
+	
+	public boolean sendKeys(String locator, String text) throws Exception {
+		try {
+			WebElement element = driver.findElement(By.xpath(locator));
+			element.sendKeys(text);
+			return true;
+		}catch(Exception e) {
+			throw new TestFrameworkException("Failed to enter text " + locator, e);
+		}
+	}
+	
+	public WebElement waitForVisibilityOfElement(WebElement element) throws Exception {
+		return wait.until(ExpectedConditions.visibilityOf(element));
+	}
+	
+	public WebElement waitForVisibilityOfElement(String locator) throws Exception {
+		WebElement element = driver.findElement(By.xpath(locator));
+		return wait.until(ExpectedConditions.visibilityOf(element));
 	}
 	
 }
